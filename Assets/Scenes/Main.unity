@@ -695,7 +695,7 @@ MonoBehaviour:
   ground:
     serializedVersion: 2
     m_Bits: 8
-  numObjects: 10
+  numObjects: 16
   numOfObjectsLeft: 0
   count: {fileID: 1791601107}
 --- !u!4 &831373279
