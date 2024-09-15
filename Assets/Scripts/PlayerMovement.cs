@@ -23,10 +23,13 @@ public class PlayerMovement : MonoBehaviour
 
     // Private:
     private float originalSpeed;
+    private float originalHeight;
+    private float originalPosition;
     // Graun cheker
     private float groundDistance = 0.4f;
     private bool isGrounded;
-    private Transform groundCheck;
+    private Transform bottomGroundCheck;
+    private Transform topGroundCheck;
     private LayerMask groundMask;
     // Physics
     private Vector3 velocity;
@@ -34,8 +37,10 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         originalSpeed = speed;
+        originalHeight = controller.height;
 
-        groundCheck = transform.Find("GroundCheck");
+        bottomGroundCheck = transform.Find("Bottom");
+        topGroundCheck = transform.Find("Top");
         groundMask = LayerMask.GetMask("Ground");
     }
 
@@ -44,18 +49,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!devscript.isInHomeOwnerMode && !pmm.isInMenu)
         {
-            if (Input.GetKeyDown(KeyCode.LeftShift))
-            {
-                speed = sprintSpeed;
-            }
-            if (Input.GetKeyUp(KeyCode.LeftShift))
-            {
-                speed = originalSpeed;
-            }
-
             Movement();
+            Sprint();
             Jump();
             Grounded();
+            Crouch();
         }
     }
 
@@ -69,12 +67,18 @@ public class PlayerMovement : MonoBehaviour
         controller.Move(move * speed * Time.deltaTime);
     }
 
+    private void Sprint()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+            speed = sprintSpeed;
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+            speed = originalSpeed;
+    }
+
     private void Jump()
     {
         if (Input.GetButtonDown("Jump") && isGrounded)
-        {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-        }
 
         velocity.y += gravity * Time.deltaTime;
 
@@ -84,12 +88,30 @@ public class PlayerMovement : MonoBehaviour
     private void Grounded()
     {
         // set isgrounded equal to if the ground check is touching another object within the layer of groundmask
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        isGrounded = Physics.CheckSphere(bottomGroundCheck.position, groundDistance, groundMask);
+
+        bool isCieling = Physics.CheckSphere(topGroundCheck.position, groundDistance, groundMask);
 
         // smooth
         if (isGrounded && velocity.y < 0)
-        {
             velocity.y = -2f;
+
+        if (!isGrounded && isCieling)
+            velocity.y = -2f;
+    }
+
+    private void Crouch()
+    {
+        if (Input.GetKeyUp(KeyCode.LeftControl))
+        {
+            controller.height = originalHeight;
+            transform.position = new Vector3(transform.position.x, (transform.position.y * 2) + transform.position.y, transform.position.z);
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            controller.height /= 2;
+            transform.position = new Vector3(transform.position.x, (transform.position.y / 2) - transform.position.y, transform.position.z);
         }
     }
 }
