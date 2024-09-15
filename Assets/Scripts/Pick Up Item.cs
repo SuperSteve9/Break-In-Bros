@@ -51,7 +51,7 @@ public class PickUpItem : MonoBehaviour
         {
             SceneManager.LoadScene(2);
         }
- 
+        
     }
 
     // update the counter
