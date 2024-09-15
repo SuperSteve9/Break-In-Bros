@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     // Player movement variables
     public float speed;
     public float sprintSpeed;
+    public float crouchSpeed;
     public float jumpHeight;
 
     public float gravity;
@@ -105,13 +106,13 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.LeftControl))
         {
             controller.height = originalHeight;
-            transform.position = new Vector3(transform.position.x, (transform.position.y * 2) + transform.position.y, transform.position.z);
+            speed = originalSpeed;
         }
 
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
             controller.height /= 2;
-            transform.position = new Vector3(transform.position.x, (transform.position.y / 2) - transform.position.y, transform.position.z);
+            speed = crouchSpeed;
         }
     }
 }
