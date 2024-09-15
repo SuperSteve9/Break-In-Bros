@@ -1028,6 +1028,11 @@ PrefabInstance:
       propertyPath: pmm
       value: 
       objectReference: {fileID: 1085407015}
+    - target: {fileID: 3691053911891128291, guid: a8b08827338500e4e85707ddfe6c58dd,
+        type: 3}
+      propertyPath: m_SkinWidth
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 5936446611992456587, guid: a8b08827338500e4e85707ddfe6c58dd,
         type: 3}
       propertyPath: m_Name
