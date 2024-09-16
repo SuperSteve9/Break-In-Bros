@@ -13,6 +13,7 @@ public class PickUpItem : MonoBehaviour
     private Camera cam;
     private LayerMask itemMask;
     // Inventory UI
+    private int itemCount = 0;
     private int slotSelected = 1;
 
     private Transform canvas;
@@ -29,6 +30,8 @@ public class PickUpItem : MonoBehaviour
         slots = canvas.Find("Inventory").GetChild(0).transform;
 
         heldItemsContainer = transform.Find("HeldItems");
+
+        UpdateSlot();
     }
 
     void Update()
@@ -36,8 +39,9 @@ public class PickUpItem : MonoBehaviour
         IsLookingAtItem();
         DropItem();
 
-        UpdateSlot();
         SelectSlot();
+
+        print(slotSelected);
     }
 
     private void IsLookingAtItem()
@@ -64,6 +68,9 @@ public class PickUpItem : MonoBehaviour
     // update the counter
     private void PickUp(Transform item)
     {
+        if (itemCount == 4)
+            return;
+
         if (slots.GetChild(slotSelected - 1).GetComponent<SlotData>().itemName == "NO ITEM CURRENTLY HELD")
         {
             item.parent = heldItemsContainer;
@@ -71,6 +78,8 @@ public class PickUpItem : MonoBehaviour
 
             slots.GetChild(slotSelected - 1).GetComponent<SlotData>().itemName = item.gameObject.name;
             slots.GetChild(slotSelected - 1).GetChild(1).GetComponent<Image>().sprite = item.GetComponent<Item>().itemIcon;
+
+            itemCount++;
         }
     }
 
@@ -87,6 +96,8 @@ public class PickUpItem : MonoBehaviour
 
                 slots.GetChild(slotSelected - 1).GetChild(1).GetComponent<Image>().sprite = null;
                 slots.GetChild(slotSelected - 1).GetComponent<SlotData>().itemName = "NO ITEM CURRENTLY HELD";
+
+                itemCount--;
             }
         }
     }
@@ -96,22 +107,27 @@ public class PickUpItem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             slotSelected = 1;
+            UpdateSlot();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             slotSelected = 2;
+            UpdateSlot();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             slotSelected = 3;
+            UpdateSlot();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             slotSelected = 4;
+            UpdateSlot();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha5))
         {
             slotSelected = 5;
+            UpdateSlot();
         }
     }
 
@@ -123,21 +139,28 @@ public class PickUpItem : MonoBehaviour
             {
                 slots.GetChild(i - 1).GetChild(0).GetComponent<Image>().color = Color.red;
 
+                /*
+                // If the selected slot has an item, show that item
                 if (slots.GetChild(i - 1).GetComponent<SlotData>().itemName != "NO ITEM CURRENTLY HELD")
                 {
+                    Debug.Log("On");
                     Transform objectToShow = heldItemsContainer.Find(slots.GetChild(i - 1).GetComponent<SlotData>().itemName);
                     objectToShow.gameObject.SetActive(true);
                 }
+                */
             }
             else
             {
                 slots.GetChild(i - 1).GetChild(0).GetComponent<Image>().color = Color.white;
 
-                if (slots.GetChild(slotSelected - 1).GetComponent<SlotData>().itemName != "NO ITEM CURRENTLY HELD")
+                /*
+                if (slots.GetChild(i - 1).GetComponent<SlotData>().itemName != "NO ITEM CURRENTLY HELD")
                 {
-                    Transform objectToShow = heldItemsContainer.Find($"{slots.GetChild(slotSelected - 1).GetComponent<SlotData>().itemName}");
-                    objectToShow.gameObject.SetActive(false);
+                    Debug.Log("Off");
+                    Transform objectToHide = heldItemsContainer.Find($"{slots.GetChild(slotSelected - 1).GetComponent<SlotData>().itemName}");
+                    objectToHide.gameObject.SetActive(false);
                 }
+                */
             }
         }
     }

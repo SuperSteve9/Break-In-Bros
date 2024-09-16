@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SlotData : MonoBehaviour
 {
-    [HideInInspector] public string itemName = "NO ITEM CURRENTLY HELD";
+    public string itemName = "NO ITEM CURRENTLY HELD";
 
     // Start is called before the first frame update
     void Start()
