@@ -13,7 +13,6 @@ public class PickUpItem : MonoBehaviour
     private Camera cam;
     private LayerMask itemMask;
     // Inventory UI
-    private int itemCount = 0;
     private int slotSelected = 1;
 
     private Transform canvas;
@@ -123,10 +122,22 @@ public class PickUpItem : MonoBehaviour
             if (i == slotSelected)
             {
                 slots.GetChild(i - 1).GetChild(0).GetComponent<Image>().color = Color.red;
+
+                if (slots.GetChild(i - 1).GetComponent<SlotData>().itemName != "NO ITEM CURRENTLY HELD")
+                {
+                    Transform objectToShow = heldItemsContainer.Find(slots.GetChild(i - 1).GetComponent<SlotData>().itemName);
+                    objectToShow.gameObject.SetActive(true);
+                }
             }
             else
             {
                 slots.GetChild(i - 1).GetChild(0).GetComponent<Image>().color = Color.white;
+
+                if (slots.GetChild(slotSelected - 1).GetComponent<SlotData>().itemName != "NO ITEM CURRENTLY HELD")
+                {
+                    Transform objectToShow = heldItemsContainer.Find($"{slots.GetChild(slotSelected - 1).GetComponent<SlotData>().itemName}");
+                    objectToShow.gameObject.SetActive(false);
+                }
             }
         }
     }
