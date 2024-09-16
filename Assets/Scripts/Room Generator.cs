@@ -18,6 +18,10 @@ public class RoomGenerator : MonoBehaviour
         GameObject foyerroom = Instantiate(foyer);
         foyerroom.transform.position = new Vector3(0, -1, 0);
         GenerateRoom(new Vector3(0, -1, 10));
+        GenerateRoom(new Vector3(0, -1, -10));
+        GenerateRoom(new Vector3(10, -1, 10));
+        GenerateRoom(new Vector3(10, -1, -10));
+        GenerateRoom(new Vector3(10, -1, 0));
     }
 
     private void GenerateRoom(Vector3 pos)
