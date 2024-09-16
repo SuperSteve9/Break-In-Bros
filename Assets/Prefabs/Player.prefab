@@ -215,6 +215,37 @@ MonoBehaviour:
   mouseSensitivity: 1000
   playerBody: {fileID: 7806147764419514012}
   pmm: {fileID: 0}
+--- !u!1 &5854597404858589220
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2414535895778664124}
+  m_Layer: 0
+  m_Name: HeldItems
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2414535895778664124
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5854597404858589220}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7806147764419514012}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5936446611992456587
 GameObject:
   m_ObjectHideFlags: 0
@@ -251,6 +282,7 @@ Transform:
   - {fileID: 378513152509175912}
   - {fileID: 7973801338058843334}
   - {fileID: 8699184037949734927}
+  - {fileID: 2414535895778664124}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &3691053911891128291
@@ -311,7 +343,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfb071a02d3538247bd532b40d8ddd85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sir: {fileID: 0}
 --- !u!1001 &4840760355123205657
 PrefabInstance:
   m_ObjectHideFlags: 0
