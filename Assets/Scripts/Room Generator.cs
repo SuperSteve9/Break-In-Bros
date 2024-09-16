@@ -13,16 +13,20 @@ public class RoomGenerator : MonoBehaviour
 
     public GameObject stairwell;
 
+    [Header("Generation Values")]
+    public int roomsPerRoute = 10;
+    public int Routes = 4;
+
     int x, y;
 
     private void Start()
     {
         GameObject foyerroom = Instantiate(foyer);
         foyerroom.transform.position = new Vector3(0, -1, 0);
-        LoopGeneration();
-        LoopGeneration();
-        LoopGeneration();
-        LoopGeneration();
+        for (int i = 0; i < Routes; i++) 
+        {
+            LoopGeneration();
+        }
     }
 
     private void GenerateRoom(Vector3 pos)
@@ -57,7 +61,7 @@ public class RoomGenerator : MonoBehaviour
 
     private void LoopGeneration()
     {
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < roomsPerRoute; i++)
         {
             int direction = Random.Range(0, 4);
             if (direction == 0)
