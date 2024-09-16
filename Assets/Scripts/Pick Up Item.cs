@@ -4,11 +4,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class PickUpItem : MonoBehaviour
 {
-    // Public:
-
     // Private:
     // Is looking at item vars
     private Camera cam;
@@ -40,9 +39,6 @@ public class PickUpItem : MonoBehaviour
 
         UpdateSlot();
         SelectSlot();
-
-        print($"slot: {slotSelected}");
-        print($"item count: {itemCount}");
     }
 
     private void IsLookingAtItem()
@@ -52,7 +48,7 @@ public class PickUpItem : MonoBehaviour
         {
             // Generate a ray in the middle of the screen
             // I might change this to be a wider range tho
-            Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+            Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 6, Screen.height / 4, 0));
             RaycastHit hit;
             // check if the ray has molested an item WOOOAHHHH
             if (Physics.Raycast(ray, out hit, 4f, itemMask))
@@ -69,31 +65,29 @@ public class PickUpItem : MonoBehaviour
     // update the counter
     private void PickUp(Transform item)
     {
-        if (itemCount == 5)
-            return;
+        if (slots.GetChild(slotSelected - 1).GetComponent<SlotData>().itemName == "NO ITEM CURRENTLY HELD")
+        {
+            item.parent = heldItemsContainer;
+            item.localPosition = item.GetComponent<Item>().holdPosition;
 
-        itemCount++;
-
-        item.parent = heldItemsContainer;
-        item.localPosition = item.GetComponent<Item>().holdPosition;
-
-        slots.GetChild(slotSelected - 1).GetChild(1).GetComponent<Image>().sprite = item.GetComponent<Item>().itemIcon;
-        slotSelected++;
+            slots.GetChild(slotSelected - 1).GetComponent<SlotData>().itemName = item.gameObject.name;
+            slots.GetChild(slotSelected - 1).GetChild(1).GetComponent<Image>().sprite = item.GetComponent<Item>().itemIcon;
+        }
     }
 
     private void DropItem()
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            if (itemCount != 0)
+            if (slots.GetChild(slotSelected - 1).GetComponent<SlotData>().itemName != "NO ITEM CURRENTLY HELD")
             {
-                heldItemsContainer.GetChild(slotSelected - 1).position = transform.position;
-                heldItemsContainer.GetChild(slotSelected - 1).parent = null;
+                Transform objectToRemove = heldItemsContainer.Find($"{slots.GetChild(slotSelected - 1).GetComponent<SlotData>().itemName}");
+
+                objectToRemove.position = transform.position;
+                objectToRemove.parent = null;
 
                 slots.GetChild(slotSelected - 1).GetChild(1).GetComponent<Image>().sprite = null;
-                slotSelected--;
-
-                itemCount--;
+                slots.GetChild(slotSelected - 1).GetComponent<SlotData>().itemName = "NO ITEM CURRENTLY HELD";
             }
         }
     }

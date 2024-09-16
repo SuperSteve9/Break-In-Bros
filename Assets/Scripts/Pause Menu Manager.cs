@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PauseMenuManager : MonoBehaviour
 {
-
     public GameObject menu;
     public bool isInMenu = false;
 

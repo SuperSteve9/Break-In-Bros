@@ -20,7 +20,6 @@ public class MouseLook : MonoBehaviour
     // actually never mind that would never load
     void Update()
     {
-
         if (!pmm.isInMenu)
         {
             // get mouse position
