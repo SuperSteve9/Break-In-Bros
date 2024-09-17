@@ -1,13 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    [Header("Item Properties")]
+    [Header("General")]
     public int ID;
-    public Vector3 holdPosition;
     public Sprite itemIcon;
+    public Vector3 holdPosition;
+
+    [Header("Details")]
+    public int sellPrice;
+    public bool isEvidence;
 
     // Start is called before the first frame update
     void Start()

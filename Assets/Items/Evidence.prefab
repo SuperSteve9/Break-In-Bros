@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &4789701168114142305
+--- !u!1001 &8436429787989261292
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -8,6 +8,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 551691396213788528, guid: bd75f2387397f2d40a7439a22d04ee16,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 551691396213788528, guid: bd75f2387397f2d40a7439a22d04ee16,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 551691396213788528, guid: bd75f2387397f2d40a7439a22d04ee16,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 551691396213788528, guid: bd75f2387397f2d40a7439a22d04ee16,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -61,14 +76,13 @@ PrefabInstance:
     - target: {fileID: 7776781864201633345, guid: bd75f2387397f2d40a7439a22d04ee16,
         type: 3}
       propertyPath: m_Name
-      value: Book
+      value: Evidence
       objectReference: {fileID: 0}
-    - target: {fileID: 7961041521321960621, guid: bd75f2387397f2d40a7439a22d04ee16,
+    - target: {fileID: 7776781864201633345, guid: bd75f2387397f2d40a7439a22d04ee16,
         type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: -5495902117074765545, guid: 6d442ef99e3bee145958a81625b95958,
-        type: 3}
+      propertyPath: m_TagString
+      value: Evidence
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
