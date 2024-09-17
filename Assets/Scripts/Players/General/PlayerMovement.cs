@@ -16,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     public float crouchSpeed;
     public float jumpHeight;
 
+    public int health;
+
     public float gravity;
 
     [Header("Script References")]
@@ -55,6 +57,11 @@ public class PlayerMovement : MonoBehaviour
             Jump();
             Grounded();
             Crouch();
+        }
+
+        if (health < 100)
+        {
+            Die();
         }
     }
 
@@ -114,5 +121,10 @@ public class PlayerMovement : MonoBehaviour
             controller.height /= 2;
             speed = crouchSpeed;
         }
+    }
+
+    private void Die()
+    {
+        // You dead
     }
 }

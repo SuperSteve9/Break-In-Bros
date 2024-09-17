@@ -5,3 +5,4 @@ F0R5371
 and different values but it did not fix it, tried to put camera rotation to 0 on start but did not work
 - Multiple items show when player picks up items
 - Models have too large of colliders
+- No scroll wheel for inventory slots

@@ -1,0 +1,8 @@
+This is for all game plans.
+
+Robbers:
+- Collect evidence and sell other items collected from the house, option to also sell evidence
+Evidence categorized into 5 tiers, 5 being weakest and 1 being strongest. Evidence can be used against the homeowner you are robbing if caught??? or to
+fight your homie Lonnie who got accidentally joined the Russian mob's cases
+
+Homeowner:
