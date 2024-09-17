@@ -1249,8 +1249,9 @@ MonoBehaviour:
   room5: {fileID: 3799215702984344836, guid: e35beb57ce584844390a872baf18791d, type: 3}
   stairwell: {fileID: 5286512600233378829, guid: cb576f55e2888454a9e08d6fbdec19fe,
     type: 3}
-  roomsPerRoute: 25
-  Routes: 3
+  roomsPerRoute: 8
+  Routes: 4
+  numStairs: 2
 --- !u!4 &1557537714
 Transform:
   m_ObjectHideFlags: 0

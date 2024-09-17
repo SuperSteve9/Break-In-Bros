@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class RoomGenerator : MonoBehaviour
@@ -16,18 +18,31 @@ public class RoomGenerator : MonoBehaviour
     [Header("Generation Values")]
     public int roomsPerRoute = 10;
     public int Routes = 4;
+    public int numStairs = 2;
+
+    [System.Serializable]
+    public class CoordinatePair
+    {
+        public int x;
+        public int y;
+    }
+
+    private List<CoordinatePair> coordinatePairs = new List<CoordinatePair>();
 
     int x, y;
+    private int stairwells;
 
     private void Start()
     {
         GameObject foyerroom = Instantiate(foyer);
+        coordinatePairs.Add(new CoordinatePair { x = 0, y = 0 });
         foyerroom.transform.position = new Vector3(0, -1, 0);
         for (int i = 0; i < Routes; i++) 
         {
             LoopGeneration();
         }
     }
+
 
     private void GenerateRoom(Vector3 pos)
     {
@@ -52,10 +67,11 @@ public class RoomGenerator : MonoBehaviour
         {
             GameObject room = Instantiate(room5);
             room.transform.position = pos;
-        } else if (randnum == 5)
+        } else if (randnum == 5 && stairwells < numStairs)
         {
             GameObject room = Instantiate(stairwell);
             room.transform.position = pos;
+            stairwells++;
         }
     }
 
@@ -63,25 +79,34 @@ public class RoomGenerator : MonoBehaviour
     {
         for (int i = 0; i < roomsPerRoute; i++)
         {
-            int direction = Random.Range(0, 4);
-            if (direction == 0)
+            bool roomGenerated = false;
+
+            while (!roomGenerated) 
             {
-                x += 10;
-                GenerateRoom(new Vector3(x, -1, y));
-            }
-            else if (direction == 1)
-            {
-                y += 10;
-                GenerateRoom(new Vector3(x, -1, y));
-            }
-            else if (direction == 2) 
-            {
-                x -= 10;
-                GenerateRoom(new Vector3(x, -1, y));    
-            } else if (direction == 3) 
-            {
-                y -= 10;
-                GenerateRoom(new Vector3(x, -1, y));
+                int direction = Random.Range(0, 4);
+                if (direction == 0)
+                {
+                    x += 10;
+                }
+                else if (direction == 1)
+                {
+                    y += 10;
+                }
+                else if (direction == 2)
+                {
+                    x -= 10;
+                }
+                else if (direction == 3)
+                {
+                    y -= 10;
+                }
+
+                if (!coordinatePairs.Any(pair => pair.x == x && pair.y == y))
+                {
+                    GenerateRoom(new Vector3(x, -1, y));
+                    coordinatePairs.Add(new CoordinatePair { x = x, y = y });
+                    roomGenerated = true;
+                }
             }
         }
         x = 0;
