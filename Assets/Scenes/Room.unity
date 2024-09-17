@@ -1241,17 +1241,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1880d68b8a501cc4a8ef162d33f7ad17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  foyer: {fileID: 6285412894817493213, guid: e8b564bdd1f4e2645b4d1b2c48032aad, type: 3}
-  room1: {fileID: 6448146806221981068, guid: ce8d03e5a6b7e534ea9270bd3f31aaf6, type: 3}
-  room2: {fileID: 7128521720405735530, guid: 2be8d41461da56a4c8cefa8cd41794f2, type: 3}
-  room3: {fileID: 6630070535067879061, guid: 5a5d50308b4c6c3458ce69835e5b405f, type: 3}
-  room4: {fileID: 7086026747244747205, guid: 37d4a2b77843a7f4e800f30f6e59e5b2, type: 3}
-  room5: {fileID: 3799215702984344836, guid: e35beb57ce584844390a872baf18791d, type: 3}
-  stairwell: {fileID: 5286512600233378829, guid: cb576f55e2888454a9e08d6fbdec19fe,
+  Foyer: {fileID: 6285412894817493213, guid: e8b564bdd1f4e2645b4d1b2c48032aad, type: 3}
+  Stairwell: {fileID: 5286512600233378829, guid: cb576f55e2888454a9e08d6fbdec19fe,
     type: 3}
-  roomsPerRoute: 8
-  Routes: 4
-  numStairs: 2
+  DiningRoom: {fileID: 1010573662892632604, guid: b76fc7ae9c2b37f4d8ffac0413370f74,
+    type: 3}
 --- !u!4 &1557537714
 Transform:
   m_ObjectHideFlags: 0
