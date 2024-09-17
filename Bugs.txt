@@ -1,0 +1,7 @@
+This file is only for known bugs.
+
+F0R5371
+- Player camera points down at feet upon start always, tried to set rotX = 90 
+and different values but it did not fix it, tried to put camera rotation to 0 on start but did not work
+- Multiple items show when player picks up items
+- Models have too large of colliders
