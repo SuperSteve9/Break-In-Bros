@@ -38,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
     private float originalPosition;
 
     private bool isCrouching = false;
+    private bool isCrouchSmoothing = false;
     private bool isSprinting = false;
     // Graun cheker
     private float groundDistance = 0.4f;
@@ -154,19 +155,23 @@ public class PlayerMovement : MonoBehaviour
 
     private void Crouch()
     {
-        if (Input.GetKeyUp(KeyCode.LeftControl) && isGrounded)
+        if (Input.GetKeyUp(KeyCode.LeftControl))
+        {
+            // Smoothing function allows for crouch smoothing between two speeds and controller heights
+            isCrouching = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftControl))
         {
             // Smoothing function allows for crouch smoothing between two speeds and controller heights
             isCrouching = true;
         }
 
-        if (Input.GetKey(KeyCode.LeftControl))
+        if (isCrouching)
         {
-            // Smoothing function allows for crouch smoothing between two speeds and controller heights
             CrouchSmoothingDown();
         }
-
-        if (isCrouching)
+        else
         {
             CrouchSmoothingUp();
         }
@@ -199,7 +204,6 @@ public class PlayerMovement : MonoBehaviour
         {
             speed = originalSpeed;
             controller.height = originalHeight;
-            isCrouching = false;
             crouchInterval = 0;
         }
     }
