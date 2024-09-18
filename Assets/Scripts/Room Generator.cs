@@ -1,115 +1,105 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class RoomGenerator : MonoBehaviour
 {
-    [Header("Rooms")]
-    public GameObject foyer;
-
-    public GameObject room1;
-    public GameObject room2;
-    public GameObject room3;
-    public GameObject room4;
-    public GameObject room5;
-
-    public GameObject stairwell;
-
-    [Header("Generation Values")]
-    public int roomsPerRoute = 10;
-    public int Routes = 4;
-    public int numStairs = 2;
-
-    [System.Serializable]
-    public class CoordinatePair
+    public GameObject Foyer;
+    public GameObject Stairwell;
+    public GameObject DiningRoom;
+    private struct RoomCoordinate
     {
-        public int x;
-        public int y;
+        public int x, y, z;
     }
-
-    private List<CoordinatePair> coordinatePairs = new List<CoordinatePair>();
-
-    int x, y;
-    private int stairwells;
+    private List<RoomCoordinate> RoomCoordinateList = new List<RoomCoordinate>();
 
     private void Start()
     {
-        GameObject foyerroom = Instantiate(foyer);
-        coordinatePairs.Add(new CoordinatePair { x = 0, y = 0 });
-        foyerroom.transform.position = new Vector3(0, -1, 0);
-        for (int i = 0; i < Routes; i++) 
-        {
-            LoopGeneration();
-        }
+        GameObject frontDoor =  Instantiate(Foyer);
+        frontDoor.transform.position = new Vector3(0, -1, 0);
+        RoomCoordinateList.Add(new RoomCoordinate { x = 0, y = -1, z = 0 });
+        GenerateRoom(Stairwell);
+
     }
 
-
-    private void GenerateRoom(Vector3 pos)
+    private void GenerateRoom(GameObject originalRoom)
     {
-        int randnum = Random.Range(0, 6);
-        if (randnum == 0) 
+        GameObject room = Instantiate(originalRoom);
+        bool hasGeneratedRoom = false;
+        while (!hasGeneratedRoom) 
         {
-            GameObject room = Instantiate(room1);
-            room.transform.position = pos;
-        } else if (randnum == 1) 
-        {
-            GameObject room = Instantiate(room2);
-            room.transform.position = pos;
-        } else if (randnum == 2) 
-        {
-            GameObject room = Instantiate(room3);
-            room.transform.position = pos;
-        } else if (randnum == 3) 
-        {
-            GameObject room = Instantiate(room4);
-            room.transform.position = pos;
-        } else if (randnum == 4) 
-        {
-            GameObject room = Instantiate(room5);
-            room.transform.position = pos;
-        } else if (randnum == 5 && stairwells < numStairs)
-        {
-            GameObject room = Instantiate(stairwell);
-            room.transform.position = pos;
-            stairwells++;
-        }
-    }
-
-    private void LoopGeneration()
-    {
-        for (int i = 0; i < roomsPerRoute; i++)
-        {
-            bool roomGenerated = false;
-
-            while (!roomGenerated) 
+            int Randint = Random.Range(0, 12);
+            if (Randint == 0)
             {
-                int direction = Random.Range(0, 4);
-                if (direction == 0)
-                {
-                    x += 10;
-                }
-                else if (direction == 1)
-                {
-                    y += 10;
-                }
-                else if (direction == 2)
-                {
-                    x -= 10;
-                }
-                else if (direction == 3)
-                {
-                    y -= 10;
-                }
-
-                if (!coordinatePairs.Any(pair => pair.x == x && pair.y == y))
-                {
-                    GenerateRoom(new Vector3(x, -1, y));
-                    coordinatePairs.Add(new CoordinatePair { x = x, y = y });
-                    roomGenerated = true;
-                }
+                room.transform.position = new Vector3(-20, -1, 0);
+                RoomCoordinateList.Add(new RoomCoordinate { x = -20, y = -1, z = 0 });
+                hasGeneratedRoom = true;
+            }
+            else if (Randint == 1)
+            {
+                room.transform.position = new Vector3(-10, -1, 0);
+                RoomCoordinateList.Add(new RoomCoordinate { x = -10, y = -1, z = 0 });
+                hasGeneratedRoom = true;
+            }
+            else if (Randint == 2)
+            {
+                room.transform.position = new Vector3(10, -1, 0);
+                RoomCoordinateList.Add(new RoomCoordinate { x = 10, y = -1, z = 0 });
+                hasGeneratedRoom = true;
+            }
+            else if (Randint == 3)
+            {
+                room.transform.position = new Vector3(-20, -1, 10);
+                RoomCoordinateList.Add(new RoomCoordinate { x = -20, y = -1, z = 10 });
+                hasGeneratedRoom = true;
+            }
+            else if (Randint == 4)
+            {
+                room.transform.position = new Vector3(-10, -1, 10);
+                RoomCoordinateList.Add(new RoomCoordinate { x = -10, y = -1, z = 10 });
+                hasGeneratedRoom = true;
+            }
+            else if (Randint == 5)
+            {
+                room.transform.position = new Vector3(0, -1, 10);
+                RoomCoordinateList.Add(new RoomCoordinate { x = 0, y = -1, z = 10 });
+                hasGeneratedRoom = true;
+            }
+            else if (Randint == 6)
+            {
+                room.transform.position = new Vector3(10, -1, 10);
+                RoomCoordinateList.Add(new RoomCoordinate { x = 10, y = -1, z = 10 });
+                hasGeneratedRoom = true;
+            }
+            else if (Randint == 7)
+            {
+                room.transform.position = new Vector3(-20, -1, 20);
+                RoomCoordinateList.Add(new RoomCoordinate { x = -20, y = -1, z = 20 });
+                hasGeneratedRoom = true;
+            }
+            else if (Randint == 8)
+            {
+                room.transform.position = new Vector3(-20, -1, 20);
+                RoomCoordinateList.Add(new RoomCoordinate { x = -20, y = -1, z = 20 });
+                hasGeneratedRoom = true;
+            }
+            else if (Randint == 9)
+            {
+                room.transform.position = new Vector3(-10, -1, 20);
+                RoomCoordinateList.Add(new RoomCoordinate { x = -10, y = -1, z = 20 });
+                hasGeneratedRoom = true;
+            }
+            else if (Randint == 10)
+            {
+                room.transform.position = new Vector3(0, -1, 20);
+                RoomCoordinateList.Add(new RoomCoordinate { x = 0, y = -1, z = 20 });
+                hasGeneratedRoom = true;
+            }
+            else if (Randint == 11)
+            {
+                room.transform.position = new Vector3(10, -1, 20);
+                RoomCoordinateList.Add(new RoomCoordinate { x = 10, y = -1, z = 20 });
+                hasGeneratedRoom = true;
             }
         }
-        x = 0;
-        y = 0;
     }
 }
