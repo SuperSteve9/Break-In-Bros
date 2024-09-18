@@ -283,7 +283,7 @@ PrefabInstance:
     - target: {fileID: 7806147764419514012, guid: a8b08827338500e4e85707ddfe6c58dd,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.64
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7806147764419514012, guid: a8b08827338500e4e85707ddfe6c58dd,
         type: 3}
@@ -1242,7 +1242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Foyer: {fileID: 6285412894817493213, guid: e8b564bdd1f4e2645b4d1b2c48032aad, type: 3}
-  Stairwell: {fileID: 5286512600233378829, guid: cb576f55e2888454a9e08d6fbdec19fe,
+  LivingRoom: {fileID: 537067664497002026, guid: 2748d530c529249498ad0c498d073dd6,
     type: 3}
   DiningRoom: {fileID: 1010573662892632604, guid: b76fc7ae9c2b37f4d8ffac0413370f74,
     type: 3}
