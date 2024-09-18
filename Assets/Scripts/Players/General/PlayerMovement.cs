@@ -118,7 +118,7 @@ public class PlayerMovement : MonoBehaviour
         if (moveState != MovementStates.Walking)
             return;
 
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && isGrounded)
         {
             SprintDown();
         }
@@ -126,6 +126,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
+        if (moveState == MovementStates.Crouching)
+            return;
+
         if (Input.GetButtonDown("Jump") && isGrounded)
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
 
@@ -151,9 +154,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Crouch()
     {
-        if (moveState == MovementStates.Sprinting)
-            return;
-
         if (Input.GetKeyUp(KeyCode.LeftControl) && isGrounded)
         {
             // Smoothing function allows for crouch smoothing between two speeds and controller heights
@@ -185,7 +185,7 @@ public class PlayerMovement : MonoBehaviour
         speed = Mathf.Lerp(originalSpeed, crouchSpeed, crouchInterval);
         controller.height = Mathf.Lerp(originalHeight, crouchHeight, crouchInterval);
 
-        crouchInterval += (crouchSpeed - 1) * Time.deltaTime;
+        crouchInterval += (crouchSpeed + 1) * Time.deltaTime;
     }
 
     private void CrouchSmoothingUp()
@@ -193,7 +193,7 @@ public class PlayerMovement : MonoBehaviour
         speed = Mathf.Lerp(originalSpeed, crouchSpeed, crouchInterval);
         controller.height = Mathf.Lerp(originalHeight, crouchHeight, crouchInterval);
 
-        crouchInterval -= (crouchSpeed - 1) * Time.deltaTime;
+        crouchInterval -= (crouchSpeed + 1) * Time.deltaTime;
 
         if (crouchInterval <= 0)
         {

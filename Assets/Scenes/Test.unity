@@ -2380,39 +2380,9 @@ PrefabInstance:
       objectReference: {fileID: 1662041129}
     - target: {fileID: 6131416195737621787, guid: a8b08827338500e4e85707ddfe6c58dd,
         type: 3}
-      propertyPath: speed
-      value: 6.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6131416195737621787, guid: a8b08827338500e4e85707ddfe6c58dd,
-        type: 3}
-      propertyPath: health
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 6131416195737621787, guid: a8b08827338500e4e85707ddfe6c58dd,
-        type: 3}
       propertyPath: devscript
       value: 
       objectReference: {fileID: 856152353}
-    - target: {fileID: 6131416195737621787, guid: a8b08827338500e4e85707ddfe6c58dd,
-        type: 3}
-      propertyPath: crouchSpeed
-      value: 2.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 6131416195737621787, guid: a8b08827338500e4e85707ddfe6c58dd,
-        type: 3}
-      propertyPath: sprintSpeed
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 6665589820964961206, guid: a8b08827338500e4e85707ddfe6c58dd,
-        type: 3}
-      propertyPath: court
-      value: 
-      objectReference: {fileID: 176186341}
-    - target: {fileID: 6665589820964961206, guid: a8b08827338500e4e85707ddfe6c58dd,
-        type: 3}
-      propertyPath: glowOutline
-      value: 
-      objectReference: {fileID: 2100000, guid: a8836214b2308ea4ab98e41d80b87924, type: 2}
     - target: {fileID: 7806147764419514012, guid: a8b08827338500e4e85707ddfe6c58dd,
         type: 3}
       propertyPath: m_LocalPosition.x
