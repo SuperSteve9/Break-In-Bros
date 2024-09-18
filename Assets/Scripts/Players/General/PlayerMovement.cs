@@ -151,6 +151,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void Crouch()
     {
+        if (moveState == MovementStates.Sprinting)
+            return;
+
         if (Input.GetKeyUp(KeyCode.LeftControl) && isGrounded)
         {
             // Smoothing function allows for crouch smoothing between two speeds and controller heights
