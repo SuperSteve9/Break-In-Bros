@@ -324,10 +324,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 3691053911891128291}
-  speed: 12
-  sprintSpeed: 18
-  crouchSpeed: 6
+  speed: 6.5
+  sprintSpeed: 14
+  crouchSpeed: 2.75
   jumpHeight: 2
+  health: 100
   gravity: -36.72
   devscript: {fileID: 0}
   pmm: {fileID: 0}

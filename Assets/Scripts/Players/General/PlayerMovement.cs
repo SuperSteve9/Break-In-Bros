@@ -10,12 +10,15 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController controller;
     
     [Header("General Properties")]
+
+    [Header("Movement")]
     // Player movement variables
     public float speed;
     public float sprintSpeed;
     public float crouchSpeed;
     public float jumpHeight;
 
+    [Header("Misc")]
     public int health;
 
     public float gravity;
@@ -25,9 +28,17 @@ public class PlayerMovement : MonoBehaviour
     public PauseMenuManager pmm;
 
     // Private:
+    private static float crouchInterval = 0.0f;
+    private static float sprintInterval = 0.0f;
+
     private float originalSpeed;
     private float originalHeight;
+    private float crouchHeight;
+
     private float originalPosition;
+
+    private bool isCrouching = false;
+    private bool isSprinting = false;
     // Graun cheker
     private float groundDistance = 0.4f;
     private bool isGrounded;
@@ -37,10 +48,24 @@ public class PlayerMovement : MonoBehaviour
     // Physics
     private Vector3 velocity;
 
+    private enum MovementStates
+    {
+        Walking, // Default
+        Sprinting,
+        Crouching,
+        Jumping
+    }
+
+    private MovementStates moveState;
+
     void Start()
     {
+        moveState = MovementStates.Walking;
+
         originalSpeed = speed;
+
         originalHeight = controller.height;
+        crouchHeight = originalHeight / 2;
 
         bottomGroundCheck = transform.Find("Bottom");
         topGroundCheck = transform.Find("Top");
@@ -63,6 +88,8 @@ public class PlayerMovement : MonoBehaviour
         {
             Die();
         }
+
+        print(moveState);
     }
 
     private void Movement()
@@ -77,10 +104,24 @@ public class PlayerMovement : MonoBehaviour
 
     private void Sprint()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-            speed = sprintSpeed;
         if (Input.GetKeyUp(KeyCode.LeftShift))
-            speed = originalSpeed;
+        {
+            isSprinting = true;
+            moveState = MovementStates.Walking;
+        }
+
+        if (isSprinting)
+        {
+            SprintUp();
+        }
+
+        if (moveState != MovementStates.Walking)
+            return;
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            SprintDown();
+        }
     }
 
     private void Jump()
@@ -110,16 +151,81 @@ public class PlayerMovement : MonoBehaviour
 
     private void Crouch()
     {
-        if (Input.GetKeyUp(KeyCode.LeftControl))
+        if (Input.GetKeyUp(KeyCode.LeftControl) && isGrounded)
         {
-            controller.height = originalHeight;
-            speed = originalSpeed;
+            // Smoothing function allows for crouch smoothing between two speeds and controller heights
+            isCrouching = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+        if (Input.GetKey(KeyCode.LeftControl))
         {
-            controller.height /= 2;
+            // Smoothing function allows for crouch smoothing between two speeds and controller heights
+            CrouchSmoothingDown();
+        }
+
+        if (isCrouching)
+        {
+            CrouchSmoothingUp();
+        }
+    }
+
+    private void CrouchSmoothingDown()
+    {
+        if (crouchInterval >= 1)
+        {
             speed = crouchSpeed;
+            controller.height = crouchHeight;
+            crouchInterval = 1;
+            return;
+        }
+
+        speed = Mathf.Lerp(originalSpeed, crouchSpeed, crouchInterval);
+        controller.height = Mathf.Lerp(originalHeight, crouchHeight, crouchInterval);
+
+        crouchInterval += (crouchSpeed - 1) * Time.deltaTime;
+    }
+
+    private void CrouchSmoothingUp()
+    {
+        speed = Mathf.Lerp(originalSpeed, crouchSpeed, crouchInterval);
+        controller.height = Mathf.Lerp(originalHeight, crouchHeight, crouchInterval);
+
+        crouchInterval -= (crouchSpeed - 1) * Time.deltaTime;
+
+        if (crouchInterval <= 0)
+        {
+            speed = originalSpeed;
+            controller.height = originalHeight;
+            isCrouching = false;
+            crouchInterval = 0;
+        }
+    }
+
+    private void SprintDown()
+    {
+        if (sprintInterval >= 1)
+        {
+            speed = sprintSpeed;
+            sprintInterval = 1;
+            return;
+        }
+
+        speed = Mathf.Lerp(originalSpeed, sprintSpeed, sprintInterval);
+
+        sprintInterval += (sprintSpeed / 4) * Time.deltaTime;
+    }
+
+    private void SprintUp()
+    {
+        speed = Mathf.Lerp(originalSpeed, sprintSpeed, sprintInterval);
+
+        sprintInterval -= (sprintSpeed / 4) * Time.deltaTime;
+
+        if (sprintInterval <= 0)
+        {
+            speed = originalSpeed;
+            isSprinting = false;
+            sprintInterval = 0;
         }
     }
 

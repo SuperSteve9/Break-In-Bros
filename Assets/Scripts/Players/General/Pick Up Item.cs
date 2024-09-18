@@ -8,10 +8,6 @@ using static UnityEditor.Progress;
 
 public class PickUpItem : MonoBehaviour
 {
-    // Public:
-    [Header("Manager References")]
-    public Court court;
-
     // Private:
     // Is looking at item vars
     private Camera cam;
@@ -74,7 +70,7 @@ public class PickUpItem : MonoBehaviour
             return;
 
         if (item.CompareTag("Evidence"))
-            court.LoadItem(item.gameObject);
+
 
         if (slots.GetChild(slotSelected - 1).GetComponent<SlotData>().itemName == "NO ITEM CURRENTLY HELD")
         {
