@@ -108,7 +108,6 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             isSprinting = true;
-            moveState = MovementStates.Walking;
         }
 
         if (isSprinting)
@@ -165,15 +164,19 @@ public class PlayerMovement : MonoBehaviour
         {
             // Smoothing function allows for crouch smoothing between two speeds and controller heights
             isCrouching = true;
+            isCrouchSmoothing = true;
         }
 
-        if (isCrouching)
+        if (isCrouchSmoothing)
         {
-            CrouchSmoothingDown();
-        }
-        else
-        {
-            CrouchSmoothingUp();
+            if (isCrouching)
+            {
+                CrouchSmoothingDown();
+            }
+            else
+            {
+                CrouchSmoothingUp();
+            }
         }
     }
 
@@ -204,6 +207,8 @@ public class PlayerMovement : MonoBehaviour
         {
             speed = originalSpeed;
             controller.height = originalHeight;
+            isCrouching = false;
+            isCrouchSmoothing = false;
             crouchInterval = 0;
         }
     }
