@@ -6,6 +6,7 @@ public class RoomGenerator : MonoBehaviour
     public GameObject Foyer;
     public GameObject LivingRoom;
     public GameObject DiningRoom;
+    public GameObject Kitchen;
     private class RoomCoordinate
     {
         public int x, y, z;
@@ -18,8 +19,8 @@ public class RoomGenerator : MonoBehaviour
         AddRoomsToList();
         GenerateRoom();
         GenerateLivingRoom();
-        // RoomCoordinateList[11].hasRoom = true;
         GenerateDiningRoom();
+        GenerateKitchen();
     }
 
     private void AddRoomsToList()
@@ -60,7 +61,6 @@ public class RoomGenerator : MonoBehaviour
     private void GenerateLivingRoom()
     {
         int location = Random.Range(0, 4);
-        // int location = 0;
         Debug.Log(location);
         if (location == 0)
         {
@@ -107,7 +107,6 @@ public class RoomGenerator : MonoBehaviour
         while (!genHap)
         {
             int location = Random.Range(0, 9);
-            //int location = 5;
             Debug.Log(location);
             if (location == 0 && !RoomCoordinateList[0].hasRoom)
             {
@@ -229,6 +228,138 @@ public class RoomGenerator : MonoBehaviour
                 RoomCoordinateList[11].hasRoom = true;
                 GameObject dr = Instantiate(DiningRoom);
                 dr.transform.position = new Vector3(10, 0, 15);
+                genHap = true;
+            }
+        }
+    }
+
+    private void GenerateKitchen()
+    {
+        bool genHap = false;
+        while (!genHap)
+        {
+            int location = Random.Range(0, 9);
+            Debug.Log(location);
+            if (location == 0 && !RoomCoordinateList[0].hasRoom)
+            {
+                if (!RoomCoordinateList[4].hasRoom)
+                {
+                    RoomCoordinateList[0].hasRoom = true;
+                    RoomCoordinateList[4].hasRoom = true;
+                    GameObject k = Instantiate(Kitchen);
+                    k.transform.position = new Vector3(-20, 0, 5);
+                    genHap = true;
+                }
+                else
+                {
+                    RoomCoordinateList[0].hasRoom = true;
+                    RoomCoordinateList[1].hasRoom = true;
+                    GameObject k = Instantiate(Kitchen);
+                    k.transform.position = new Vector3(-15, 0, 0);
+                    k.transform.rotation = Quaternion.Euler(0, 90, 0);
+                    genHap = true;
+                }
+            }
+            else if (location == 1 && !RoomCoordinateList[4].hasRoom)
+            {
+                if (!RoomCoordinateList[8].hasRoom)
+                {
+                    RoomCoordinateList[4].hasRoom = true;
+                    RoomCoordinateList[8].hasRoom = true;
+                    GameObject k = Instantiate(Kitchen);
+                    k.transform.position = new Vector3(-20, 0, 15);
+                    genHap = true;
+                }
+                else
+                {
+                    RoomCoordinateList[4].hasRoom = true;
+                    RoomCoordinateList[5].hasRoom = true;
+                    GameObject k = Instantiate(Kitchen);
+                    k.transform.position = new Vector3(-15, 0, 10);
+                    k.transform.rotation = Quaternion.Euler(0, 90, 0);
+                    genHap = true;
+                }
+            }
+            else if (location == 2 && (!RoomCoordinateList[8].hasRoom && !RoomCoordinateList[9].hasRoom))
+            {
+                RoomCoordinateList[8].hasRoom = true;
+                RoomCoordinateList[9].hasRoom = true;
+                GameObject k = Instantiate(Kitchen);
+                k.transform.position = new Vector3(-15, 0, 20);
+                k.transform.rotation = Quaternion.Euler(0, 90, 0);
+                genHap = true;
+            }
+            else if (location == 3 && (!RoomCoordinateList[1].hasRoom && !RoomCoordinateList[5].hasRoom))
+            {
+                RoomCoordinateList[1].hasRoom = true;
+                RoomCoordinateList[5].hasRoom = true;
+                GameObject k = Instantiate(Kitchen);
+                k.transform.position = new Vector3(-10, 0, 5);
+                genHap = true;
+            }
+            else if (location == 4 && !RoomCoordinateList[5].hasRoom)
+            {
+                if (!RoomCoordinateList[10].hasRoom)
+                {
+                    RoomCoordinateList[5].hasRoom = true;
+                    RoomCoordinateList[10].hasRoom = true;
+                    GameObject k = Instantiate(Kitchen);
+                    k.transform.position = new Vector3(-10, 0, 15);
+                    genHap = true;
+                }
+                else
+                {
+                    RoomCoordinateList[5].hasRoom = true;
+                    RoomCoordinateList[6].hasRoom = true;
+                    GameObject k = Instantiate(Kitchen);
+                    k.transform.position = new Vector3(-5, 0, 10);
+                    k.transform.rotation = Quaternion.Euler(0, 90, 0);
+                    genHap = true;
+                }
+            }
+            else if (location == 5 && !RoomCoordinateList[6].hasRoom)
+            {
+                if (!RoomCoordinateList[11].hasRoom)
+                {
+                    RoomCoordinateList[6].hasRoom = true;
+                    RoomCoordinateList[11].hasRoom = true;
+                    GameObject k = Instantiate(Kitchen);
+                    k.transform.position = new Vector3(0, 0, 15);
+                    genHap = true;
+                }
+                else if (!RoomCoordinateList[7].hasRoom)
+                {
+                    RoomCoordinateList[6].hasRoom = true;
+                    RoomCoordinateList[7].hasRoom = true;
+                    GameObject k = Instantiate(Kitchen);
+                    k.transform.position = new Vector3(5, 0, 10);
+                    k.transform.rotation = Quaternion.Euler(0, 90, 0);
+                    genHap = true;
+                }
+            }
+            else if (location == 6 && (!RoomCoordinateList[10].hasRoom && !RoomCoordinateList[11].hasRoom))
+            {
+                RoomCoordinateList[10].hasRoom = true;
+                RoomCoordinateList[11].hasRoom = true;
+                GameObject k = Instantiate(Kitchen);
+                k.transform.position = new Vector3(5, 0, 20);
+                k.transform.rotation = Quaternion.Euler(0, 90, 0);
+                genHap = true;
+            }
+            else if (location == 7 && !RoomCoordinateList[3].hasRoom)
+            {
+                RoomCoordinateList[3].hasRoom = true;
+                RoomCoordinateList[7].hasRoom = true;
+                GameObject k = Instantiate(Kitchen);
+                k.transform.position = new Vector3(10, 0, 5);
+                genHap = true;
+            }
+            else if (location == 8 && !RoomCoordinateList[7].hasRoom)
+            {
+                RoomCoordinateList[7].hasRoom = true;
+                RoomCoordinateList[11].hasRoom = true;
+                GameObject k = Instantiate(Kitchen);
+                k.transform.position = new Vector3(10, 0, 15);
                 genHap = true;
             }
         }

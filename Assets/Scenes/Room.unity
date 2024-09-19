@@ -1246,6 +1246,7 @@ MonoBehaviour:
     type: 3}
   DiningRoom: {fileID: 1010573662892632604, guid: b76fc7ae9c2b37f4d8ffac0413370f74,
     type: 3}
+  Kitchen: {fileID: 6475785602214144307, guid: 57991551065ed4f49a085690e508680f, type: 3}
 --- !u!4 &1557537714
 Transform:
   m_ObjectHideFlags: 0
