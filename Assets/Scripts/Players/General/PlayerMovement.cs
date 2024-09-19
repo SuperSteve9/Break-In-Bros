@@ -16,26 +16,23 @@ public class PlayerMovement : MonoBehaviour
     public float speed;
     public float sprintSpeed;
     public float crouchSpeed;
+
     public float jumpHeight;
 
     [Header("Misc")]
     public int health;
-
     public float gravity;
 
-    [Header("Script References")]
-    public DevScripts devscript;
-    public PauseMenuManager pmm;
+    // Hide
+    [HideInInspector] public float originalSpeed;
+    [HideInInspector] public float originalHeight;
+    [HideInInspector] public float crouchHeight;
 
     // Private:
+    private Vector3 spawnPos;
+
     private static float crouchInterval = 0.0f;
     private static float sprintInterval = 0.0f;
-
-    private float originalSpeed;
-    private float originalHeight;
-    private float crouchHeight;
-
-    private float originalPosition;
 
     private bool isCrouching = false;
     private bool isCrouchSmoothing = false;
@@ -49,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
     // Physics
     private Vector3 velocity;
 
-    private enum MovementStates
+    public enum MovementStates
     {
         Walking, // Default
         Sprinting,
@@ -57,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
         Jumping
     }
 
-    private MovementStates moveState;
+    [HideInInspector] public MovementStates moveState;
 
     void Start()
     {
@@ -71,26 +68,24 @@ public class PlayerMovement : MonoBehaviour
         bottomGroundCheck = transform.Find("Bottom");
         topGroundCheck = transform.Find("Top");
         groundMask = LayerMask.GetMask("Ground");
+
+        spawnPos = GameObject.Find("SpawnPosition").transform.position;
+        transform.position = spawnPos;
     }
 
     // Update is called once per frame - I know stupid ass unity
     void Update()
     {
-        if (!devscript.isInHomeOwnerMode && !pmm.isInMenu)
-        {
-            Movement();
-            Sprint();
-            Jump();
-            Grounded();
-            Crouch();
-        }
+        Movement();
+        Sprint();
+        Jump();
+        Grounded();
+        Crouch();
 
         if (health < 100)
         {
             Die();
         }
-
-        print(moveState);
     }
 
     private void Movement()
@@ -239,6 +234,11 @@ public class PlayerMovement : MonoBehaviour
             isSprinting = false;
             sprintInterval = 0;
         }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
     }
 
     private void Die()

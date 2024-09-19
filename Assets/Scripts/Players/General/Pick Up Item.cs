@@ -5,7 +5,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class PickUpItem : MonoBehaviour
 {
@@ -69,9 +68,6 @@ public class PickUpItem : MonoBehaviour
     {
         if (itemCount == 4)
             return;
-
-        if (item.CompareTag("Evidence"))
-
 
         if (slots.GetChild(slotSelected - 1).GetComponent<SlotData>().itemName == "NO ITEM CURRENTLY HELD")
         {
