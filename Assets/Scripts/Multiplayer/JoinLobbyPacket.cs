@@ -1,7 +1,6 @@
 using UnityEngine;
 using Steamworks;
 using System.Text;
-using System;
 using TMPro;
 
 public class JoinLobbyPacket : MonoBehaviour
@@ -52,7 +51,7 @@ public class JoinLobbyPacket : MonoBehaviour
             fsid,
             data,
             (uint)data.Length,
-            EP2PSend.k_EP2PSendReliable,
+            EP2PSend.k_EP2PSendUnreliable,
             0);
 
         if (result) {
