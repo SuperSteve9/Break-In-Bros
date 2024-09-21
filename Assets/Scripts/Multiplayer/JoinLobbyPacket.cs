@@ -79,10 +79,15 @@ public class JoinLobbyPacket : MonoBehaviour
 
             if (result) 
             {
+                Debug.Log("Got packet data.");
                 string lobbyID = Encoding.UTF8.GetString(buffer, 0, (int)bytesRead);
-                if (lobbyID.Equals(lm.lobbyID))
+                if (lobbyID.Equals(lm.lobbyID.ToString()))
                 {
+                    Debug.Log($"Adding player {steamID} to lobby");
                     lm.AddPlayerToLobby(steamID);
+                } else
+                {
+                    Debug.Log($"ID in packet doesn't match room id. Local:{lm.lobbyID} Recieved: {lobbyID}");
                 }
             }
         }
