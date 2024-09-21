@@ -49,7 +49,7 @@ public class SendPlayerDataPacket: MonoBehaviour
         for (int i = 0; i < friendCount; i++) 
         {
             CSteamID friendSteamID = SteamFriends.GetFriendByIndex(i, EFriendFlags.k_EFriendFlagImmediate);
-            Debug.Log(friendSteamID);
+            Debug.Log($"{friendSteamID} aka " + SteamFriends.GetFriendPersonaName(friendSteamID));
             SendPacket(friendSteamID);
         }
     }
@@ -77,9 +77,6 @@ public class SendPlayerDataPacket: MonoBehaviour
             {
                 Debug.Log("Error reading Packet.");
             }
-        } else
-        {
-            Debug.Log("No Packet to Read");
         }
     }
 }
