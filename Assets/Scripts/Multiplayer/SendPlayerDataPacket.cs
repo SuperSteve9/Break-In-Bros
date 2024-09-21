@@ -73,7 +73,13 @@ public class SendPlayerDataPacket: MonoBehaviour
             {
                 string message = Encoding.UTF8.GetString(buffer, 0, (int)bytesRead);
                 Debug.Log(message);
+            } else
+            {
+                Debug.Log("Error reading Packet.");
             }
+        } else
+        {
+            Debug.Log("No Packet to Read");
         }
     }
 }
