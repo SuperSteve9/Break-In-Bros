@@ -2,6 +2,7 @@ using UnityEngine;
 using Steamworks;
 using System.Text;
 using TMPro;
+using System.Collections;
 
 public class JoinLobbyPacket : MonoBehaviour
 {
@@ -10,11 +11,17 @@ public class JoinLobbyPacket : MonoBehaviour
     public TMP_InputField inputFieldLobbyID;
     public TMP_InputField inputFieldSteamID;
 
+    private Callback<P2PSessionRequest_t> p2pSessionRequest;
+    private Callback<P2PSessionConnectFail_t> p2pSessionConnectFail;
+
     void Start()
     {
         if (SteamManager.Initialized)
         {
             Debug.Log("Steam loaded correctly.");
+            p2pSessionRequest = Callback<P2PSessionRequest_t>.Create(OnP2PSessionRequest);
+            p2pSessionConnectFail = Callback<P2PSessionConnectFail_t>.Create(OnP2PSessionConnectFail);
+            StartCoroutine(CheckForPackets());
         }
         else
         {
@@ -22,10 +29,26 @@ public class JoinLobbyPacket : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void OnP2PSessionRequest(P2PSessionRequest_t request)
     {
-        GetJoinPacket();
+        CSteamID remoteID = request.m_steamIDRemote;
+        SteamNetworking.AcceptP2PSessionWithUser(remoteID);
     }
+
+    private void OnP2PSessionConnectFail(P2PSessionConnectFail_t failure)
+    {
+        Debug.Log("P2P session failed with user " + failure.m_steamIDRemote);
+    }
+
+    private IEnumerator CheckForPackets()
+    {
+        while (true)
+        {
+            GetJoinPacket();
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
 
     public void SendPacket()
     {
@@ -64,12 +87,12 @@ public class JoinLobbyPacket : MonoBehaviour
 
     private void GetJoinPacket()
     {
-        byte[] buffer = new byte[1024];
         uint bytesRead;
         CSteamID steamID;
 
         if (SteamNetworking.IsP2PPacketAvailable(out uint packetSize))
         {
+            byte[] buffer = new byte[packetSize];
             bool result = SteamNetworking.ReadP2PPacket(
                 buffer,
                 packetSize,
@@ -89,6 +112,9 @@ public class JoinLobbyPacket : MonoBehaviour
                 {
                     Debug.Log($"ID in packet doesn't match room id. Local:{lm.lobbyID} Recieved: {lobbyID}");
                 }
+            } else
+            {
+                Debug.Log("Packet Data invalid");
             }
         }
     }

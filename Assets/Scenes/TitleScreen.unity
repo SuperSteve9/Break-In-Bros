@@ -256,6 +256,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 57123862}
   m_CullTransparentMesh: 1
+--- !u!1 &70912628
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 70912630}
+  - component: {fileID: 70912629}
+  m_Layer: 0
+  m_Name: LobbyPacketrs
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &70912629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70912628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e05f2db45a4ded44396d4b55e273ad59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lm: {fileID: 543198289}
+  inputFieldLobbyID: {fileID: 2008859230}
+  inputFieldSteamID: {fileID: 382291547}
+--- !u!4 &70912630
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70912628}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 934.09375, y: 404.72113, z: 142.47925}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &315977616
 GameObject:
   m_ObjectHideFlags: 0
@@ -627,7 +674,6 @@ GameObject:
   m_Component:
   - component: {fileID: 543198288}
   - component: {fileID: 543198289}
-  - component: {fileID: 543198290}
   m_Layer: 0
   m_Name: Lobby
   m_TagString: Untagged
@@ -677,21 +723,6 @@ MonoBehaviour:
   player3Name: {fileID: 1837941509}
   player4Name: {fileID: 1450036171}
   lobbyID: 0
---- !u!114 &543198290
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 543198286}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e05f2db45a4ded44396d4b55e273ad59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lm: {fileID: 543198289}
-  inputFieldLobbyID: {fileID: 2008859230}
-  inputFieldSteamID: {fileID: 382291547}
 --- !u!1 &543644564
 GameObject:
   m_ObjectHideFlags: 0
@@ -1078,7 +1109,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 543198290}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: JoinLobbyPacket, Assembly-CSharp
         m_MethodName: SendPacket
         m_Mode: 1
@@ -2438,50 +2469,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1700975598}
   m_CullTransparentMesh: 1
---- !u!1 &1802522969
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1802522971}
-  - component: {fileID: 1802522970}
-  m_Layer: 0
-  m_Name: SPDP
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1802522970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1802522969}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d427c2f52161a840b6aec821228b65e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1802522971
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1802522969}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 652.7498, y: 338.20416, z: -248.60658}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1837941507
 GameObject:
   m_ObjectHideFlags: 0
@@ -3156,5 +3143,5 @@ SceneRoots:
   - {fileID: 543644566}
   - {fileID: 1521202047}
   - {fileID: 1989920674}
-  - {fileID: 1802522971}
   - {fileID: 543198288}
+  - {fileID: 70912630}
