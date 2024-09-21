@@ -1,76 +1,79 @@
-using Steamworks;
-using TMPro;
 using UnityEngine;
+using Steamworks;
+using System.Text;
 
-public class SendPlayerDataPacket : MonoBehaviour
+public class SendPlayerDataPacket: MonoBehaviour
 {
-    string name;
-    public TMP_Text text;
-    public TMP_Text text2;
-    public TMP_Text text3;
-    void Start()
+
+    private void Start()
     {
-        if (SteamManager.Initialized)
+        if(SteamManager.Initialized)
         {
-            name = SteamFriends.GetPersonaName();
-            text.text = $"Name: {name}";
-        }
-        text3.text = "Waiting for packet..";
-
-        GetSteamIDFromName();
-
-    }
-
-    public void SendPacket(CSteamID recpient)
-    {
-        byte[] data = System.Text.Encoding.UTF8.GetBytes($"{SteamFriends.GetPersonaName()} says hello!");
-
-        bool success = SteamNetworking.SendP2PPacket(
-            recpient,
-            data,
-            (uint)data.Length,
-            EP2PSend.k_EP2PSendReliable,
-            0);
-
-        if (success)
+            Debug.Log("Steam loaded correctly.");
+            LoopThroughFriends();
+        } else
         {
-            Debug.Log("It was sent");
-        }
-        else
-        {
-            Debug.Log("Something went wrong lmao");
+            Debug.Log("Steam didn't load correctly.");
         }
     }
 
     private void Update()
     {
-        uint packetSize;
+        GetPacket();
+    }
 
-        while (SteamNetworking.IsP2PPacketAvailable(out packetSize))
+
+    private void SendPacket(CSteamID fsid)
+    {
+        byte[] data = Encoding.UTF8.GetBytes("Test");
+
+        bool result = SteamNetworking.SendP2PPacket(
+            fsid,
+            data,
+            (uint)data.Length,
+            EP2PSend.k_EP2PSendReliable,
+            0);
+
+        if (result) 
         {
-            byte[] buffer = new byte[packetSize];
-            uint bytesRead;
-            CSteamID sender;
-
-            if (SteamNetworking.ReadP2PPacket(buffer, packetSize, out bytesRead, out sender))
-            {
-                string message = System.Text.Encoding.UTF8.GetString(buffer);
-                text3.text = $"Recieved packet message {message} from {sender}";
-            }
+            Debug.Log($"It was sent to {fsid}");
+        } else
+        {
+            Debug.Log("It was not sent.");
         }
     }
 
-    private void GetSteamIDFromName()
+    private void LoopThroughFriends()
     {
         int friendCount = SteamFriends.GetFriendCount(EFriendFlags.k_EFriendFlagImmediate);
-        text2.text = $"Friend Count: {friendCount}";
-
-        for (int i = 0; i < friendCount; i++)
+        for (int i = 0; i < friendCount; i++) 
         {
             CSteamID friendSteamID = SteamFriends.GetFriendByIndex(i, EFriendFlags.k_EFriendFlagImmediate);
-            string friendName = SteamFriends.GetFriendPersonaName(friendSteamID);
-            Debug.Log(friendName);
+            Debug.Log(friendSteamID);
             SendPacket(friendSteamID);
+        }
+    }
+
+    private void GetPacket() 
+    {
+        byte[] buffer = new byte[1024];
+        uint bytesRead;
+        CSteamID fsid;
+
+        if (SteamNetworking.IsP2PPacketAvailable(out uint packetSize))
+        {
+            bool result = SteamNetworking.ReadP2PPacket(
+                buffer,
+                packetSize,
+                out  bytesRead,
+                out fsid,
+                0);
+
+            if (result) 
+            {
+                string message = Encoding.UTF8.GetString(buffer, 0, (int)bytesRead);
+                Debug.Log(message);
+            }
         }
     }
 }
