@@ -78,26 +78,40 @@ public class LobbyManagement : MonoBehaviour
         slot0 = true;
     }
 
+    public void JoinLobby()
+    {
+        GameText.SetActive(false);
+        CreateLobbyButton.SetActive(false);
+        lobbyIDInputField.SetActive(false);
+        JoinLobbyButton.SetActive(false);
+        HostIDInputField.SetActive(false);
+    }
+
     public void AddPlayerToLobby(CSteamID player)
     {
         if (!slot1)
         {
             player2Name.text = SteamFriends.GetFriendPersonaName(player);
             player2TextObject.SetActive(true);
+            slot1 = true;
         }
-        if (!slot2)
+        else if (!slot2)
         {
             player3Name.text = SteamFriends.GetFriendPersonaName(player);
             player3TextObject.SetActive(true);
+            slot2 = true;
         }
-        if (!slot3)
+        else if (!slot3)
         {
             player4Name.text = SteamFriends.GetFriendPersonaName(player);
             player4TextObject.SetActive(true);
-        } if (!slot4)
+            slot3 = true;
+        } 
+        else if (!slot4)
         {
             player5Name.text = SteamFriends.GetFriendPersonaName(player);
             player5TextObject.SetActive(true);
+            slot4 = true;
         }
     }
 
