@@ -1,8 +1,8 @@
 using UnityEngine;
 using Steamworks;
-using System.Text;
 using TMPro;
 using System.Collections;
+using System;
 
 public class JoinLobbyPacket : MonoBehaviour
 {
@@ -19,6 +19,8 @@ public class JoinLobbyPacket : MonoBehaviour
         if (SteamManager.Initialized)
         {
             Debug.Log("Steam loaded correctly.");
+            var relayStatus = SteamNetworkingUtils.GetRelayNetworkStatus(out SteamRelayNetworkStatus_t status);
+            Debug.Log($"Using relay: {status.m_eAvail}");
             p2pSessionRequest = Callback<P2PSessionRequest_t>.Create(OnP2PSessionRequest);
             p2pSessionConnectFail = Callback<P2PSessionConnectFail_t>.Create(OnP2PSessionConnectFail);
             StartCoroutine(CheckForPackets());
@@ -45,20 +47,27 @@ public class JoinLobbyPacket : MonoBehaviour
         while (true)
         {
             GetJoinPacket();
-            yield return new WaitForSeconds(0.1f);
+            yield return null;
         }
     }
 
 
     public void SendPacket()
     {
-        string lobbyID = inputFieldLobbyID.text;
+        ulong lobbyID;
         ulong steamID;
 
         if (ulong.TryParse(inputFieldSteamID.text, out steamID)) 
         {
             CSteamID fsid = new CSteamID(steamID);
-            SendJoinPacket(fsid, lobbyID);
+            if (ulong.TryParse(inputFieldLobbyID.text, out lobbyID))
+            {
+                SendJoinPacket(fsid, lobbyID);
+            }
+            else
+            {
+                Debug.Log("Uh oh you entered the lobby id in wrong :skull:");
+            }
         } else
         {
             Debug.Log("Uh oh you entered the steam id wrong :(");
@@ -66,15 +75,15 @@ public class JoinLobbyPacket : MonoBehaviour
 
     }
 
-    private void SendJoinPacket(CSteamID fsid, string lobbyID)
+    private void SendJoinPacket(CSteamID fsid, ulong lobbyID)
     {
-        byte[] data = Encoding.UTF8.GetBytes(lobbyID);
+        byte[] data = BitConverter.GetBytes(lobbyID);
 
         bool result = SteamNetworking.SendP2PPacket(
             fsid,
             data,
             (uint)data.Length,
-            EP2PSend.k_EP2PSendUnreliable,
+            EP2PSend.k_EP2PSendUnreliableNoDelay,
             0);
 
         if (result) {
@@ -103,8 +112,8 @@ public class JoinLobbyPacket : MonoBehaviour
             if (result) 
             {
                 Debug.Log("Got packet data.");
-                string lobbyID = Encoding.UTF8.GetString(buffer, 0, (int)bytesRead);
-                if (lobbyID.Equals(lm.lobbyID.ToString()))
+                int lobbyID = BitConverter.ToInt32(buffer, 0);
+                if (lobbyID == lm.lobbyID)
                 {
                     Debug.Log($"Adding player {steamID} to lobby");
                     lm.AddPlayerToLobby(steamID);
