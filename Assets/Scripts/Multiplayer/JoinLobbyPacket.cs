@@ -8,6 +8,7 @@ public class JoinLobbyPacket : MonoBehaviour
 {
 
     public LobbyManagement lm;
+    public SendingPackets sp;
     public TMP_InputField inputFieldLobbyID;
     public TMP_InputField inputFieldSteamID;
 
@@ -51,7 +52,6 @@ public class JoinLobbyPacket : MonoBehaviour
         }
     }
 
-
     public void SendPacket()
     {
         ulong lobbyID;
@@ -62,7 +62,7 @@ public class JoinLobbyPacket : MonoBehaviour
             CSteamID fsid = new CSteamID(steamID);
             if (ulong.TryParse(inputFieldLobbyID.text, out lobbyID))
             {
-                SendJoinPacket(fsid, lobbyID);
+                sp.SendJoinPacket(fsid, lobbyID);
             }
             else
             {
@@ -73,25 +73,6 @@ public class JoinLobbyPacket : MonoBehaviour
             Debug.Log("Uh oh you entered the steam id wrong :(");
         }
 
-    }
-
-    private void SendJoinPacket(CSteamID fsid, ulong lobbyID)
-    {
-        byte[] data = BitConverter.GetBytes(lobbyID);
-
-        bool result = SteamNetworking.SendP2PPacket(
-            fsid,
-            data,
-            (uint)data.Length,
-            EP2PSend.k_EP2PSendUnreliableNoDelay,
-            0);
-
-        if (result) {
-            Debug.Log("Join Request sent!");
-        } else
-        {
-            Debug.Log("An error occured.");
-        }
     }
 
     private void GetJoinPacket()
