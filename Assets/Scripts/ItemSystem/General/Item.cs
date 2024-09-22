@@ -13,6 +13,7 @@ public class Item : MonoBehaviour
     [Header("Details")]
     public int sellPrice;
     public bool isEvidence;
+    public bool isUsable;
 
     // Start is called before the first frame update
     void Start()

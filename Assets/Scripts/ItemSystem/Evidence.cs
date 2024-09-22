@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Evidence : MonoBehaviour
+public class Evidence : Item
 {
     [Header("Evidence Properties")]
     public int strength;

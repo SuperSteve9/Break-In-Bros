@@ -5,18 +5,28 @@ using UnityEngine.SceneManagement;
 
 public class TimeManager : MonoBehaviour
 {
+    [Header("Time Settings")]
     public int totalTime; // Default is 12 hours
     public int time;
     public float timeScale;
+
+    [Header("Other Settings")]
+    public int warningTime;
+
+    private IEnumerator EndDay()
+    {
+        yield return new WaitForSeconds(warningTime);
+        SceneManager.LoadScene(2);
+    }
 
     private IEnumerator DayCycle()
     {
         yield return new WaitForSeconds(timeScale);
         time++;
 
-        if (time < totalTime)
+        if (time > totalTime)
         {
-            // Do function for ending day
+            StartCoroutine("EndDay");
         }
 
         StartCoroutine("DayCycle");

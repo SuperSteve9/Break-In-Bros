@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class PickUpItem : MonoBehaviour
 {
+    public Court court;
+
     // Private:
     // Is looking at item vars
     private Camera cam;
@@ -38,6 +40,7 @@ public class PickUpItem : MonoBehaviour
     {
         IsLookingAtItem();
         DropItem();
+        UseItem();
 
         SelectSlot();
 
@@ -69,6 +72,9 @@ public class PickUpItem : MonoBehaviour
         if (itemCount == 4)
             return;
 
+        if (item.GetComponent<Item>().isEvidence)
+            court.AddEvidence();
+
         if (slots.GetChild(slotSelected - 1).GetComponent<SlotData>().itemName == "NO ITEM CURRENTLY HELD")
         {
             item.parent = heldItemsContainer;
@@ -96,6 +102,21 @@ public class PickUpItem : MonoBehaviour
                 slots.GetChild(slotSelected - 1).GetComponent<SlotData>().itemName = "NO ITEM CURRENTLY HELD";
 
                 itemCount--;
+            }
+        }
+    }
+
+    private void UseItem()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            if (slots.GetChild(slotSelected - 1).GetComponent<SlotData>().itemName != "NO ITEM CURRENTLY HELD")
+            {
+                Transform objectToUse = heldItemsContainer.Find($"{slots.GetChild(slotSelected - 1).GetComponent<SlotData>().itemName}");
+                if (objectToUse.GetComponent<Item>().isUsable)
+                {
+                    objectToUse.GetComponent<Weapon>().UseItem();
+                }
             }
         }
     }
