@@ -21,6 +21,7 @@ public class Court : MonoBehaviour
         
     }
 
+    // Loads number of evidence each time one is picked up to check when court is loaded if it is enough
     public void AddEvidence()
     {
         evidenceCount++;

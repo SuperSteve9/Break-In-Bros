@@ -9,11 +9,13 @@ using UnityEngine.UI;
 public class PickUpItem : MonoBehaviour
 {
     public Court court;
+    public CameraManager camManager;
 
     // Private:
     // Is looking at item vars
     private Camera cam;
     private LayerMask itemMask;
+    private LayerMask interactableMask;
     // Inventory UI
     private int itemCount = 0;
     private int slotSelected = 1;
@@ -26,7 +28,9 @@ public class PickUpItem : MonoBehaviour
     void Start()
     {
         cam = transform.Find("Main Camera").GetComponent<Camera>();
+
         itemMask = LayerMask.GetMask("Item");
+        interactableMask = LayerMask.GetMask("LoadGame");
 
         canvas = GameObject.Find("Canvas").transform;
         slots = canvas.Find("Inventory").GetChild(0).transform;
@@ -43,13 +47,11 @@ public class PickUpItem : MonoBehaviour
         UseItem();
 
         SelectSlot();
-
-        print(itemCount);
     }
 
     private void IsLookingAtItem()
     {
-        // If item in radius
+        // For items
         if (Physics.CheckSphere(transform.position, 4, itemMask))
         {
             Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
@@ -61,6 +63,22 @@ public class PickUpItem : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     PickUp(hit.collider.gameObject.transform);
+                }
+            }
+        }
+
+        // For lobby button
+        if (Physics.CheckSphere(transform.position, 4, interactableMask))
+        {
+            Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, 4f, interactableMask))
+            {
+                // if the key E is pressed it will "pick up" the item
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    hit.collider.transform.parent.GetComponent<LoadGame>().LoadMain();
                 }
             }
         }
